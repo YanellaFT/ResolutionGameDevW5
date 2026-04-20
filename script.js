@@ -1,22 +1,112 @@
-const API_ENDPOINT = 'https://icanhazdadjoke.com/';
-const XHR = new XMLHttpRequest();
+document.addEventListener('DOMContentLoaded', () => {
 
-function  getJoke() {
-    XHR.open('GET', API_ENDPOINT);
+    const selectorBtn = document.getElementById('button');
+    const ctaBtn = document.getElementById('cta');
+    const loader = document.getElementById('loader');
+    const joke = document.getElementById('joke');
+    const errorCont = document.getElementById('errorContainer');
+    const error = document.getElementById('errorMessage');
 
-    XHR.setRequestHeader('Accept', 'application/json');
-    XHR.responseType = 'json';
-
-    XHR.onload = function() {
-        showJoke(XHR.response.joke);
-        setButtonCta(false);
-    }
+    const API_ENDPOINT = 'https://icanhazdadjoke.com/';
     
-    XHR.onerror = function() {
-        showError("An error occurec, please try again");
-        setButtonCta(false);
+
+    let fullJoke = "";
+    let punchline = "";
+    let isPunchlinePending = false;
+
+    function setDisabledUiState(isDisabled) {
+        setLoaderState(isDisabled);
+        setButtonState(isDisabled);
     }
 
-    XHR.send();
 
-}
+
+    function processJoke(jokeText) {
+        setDisabledUiState(false);
+        errorCont.style.display = 'none';
+        
+        fullJoke = jokeText;
+
+        const splitIndex = jokeText.search(/[?!.]/);
+
+        if (splitIndex !== -1) {
+            joke.innerHTML = jokeText.substring(0, splitIndex + 1);
+            punchline = jokeText.substring(splitIndex + 1).trim();
+            isPunchlinePending = true;
+            ctaBtn.innerHTML = "Show Answer";
+        }else {
+            joke.innerHTML = "I have a good one...";
+            punchline = jokeText;
+            isPunchlinePending = true;
+            ctaBtn.innerHTML = "What is it?";
+        }
+    }
+
+
+
+    function showAnswer() {
+        joke.innerHTML += `<br><br><strong>${punchline}</strong>`;
+        ctaBtn.innerHTML = "Get another one";
+        isPunchlinePending = false;
+    }
+
+    function showError(error) {
+        setDisabledUiState(false);
+        isPunchlinePending = false;
+        joke.innerHTML = ''; 
+        error.innerHTML = error;
+        errorCont.style.display = 'block';
+        ctaBtn.innerHTML = "Try again";
+    }
+
+
+
+    function setLoaderState(isVisible) {
+        loader.style.display = isVisible ? 'block' : 'none';
+    }
+
+    function setButtonState(isDisabled) {
+        if (isDisabled) {
+            selectorBtn.setAttribute('disabled', 'disabled');
+        } else {
+            selectorBtn.removeAttribute('disabled');
+        }
+        ctaBtn.style.display = isDisabled ? 'none' : 'block';
+    }
+
+
+    function getJoke() {
+        const XHR = new XMLHttpRequest();
+        XHR.open('GET', API_ENDPOINT);
+        XHR.setRequestHeader('Accept', 'application/json');
+        XHR.responseType = 'json';
+
+        XHR.onload = function() {
+            if (XHR.status === 200) {
+                processJoke(XHR.response.joke);
+            } else {
+                showError('Server error: ' + XHR.status);
+            }
+        };
+
+        XHR.onerror = function() {
+            showError('Connection error.');
+        };
+
+        XHR.send();
+    }
+
+
+
+    if (selectorBtn) {
+        selectorBtn.addEventListener('click', function() {
+            if (isPunchlinePending) {
+                showAnswer();
+            } else {
+                setDisabledUiState(true);
+                getJoke();
+            }
+        });
+    }
+
+});

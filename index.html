@@ -17,13 +17,23 @@
             </header>
 
             <div class="joke_container">
+                <div id="errorContainer" class="error_container">
+                    <p>
+                        Something happened and couldn't load the joke!
+                        <small id="errorMessage"></small>
+                    </p>
+                </div>
+                
                 <p id="joke"></p>
                 <button id="button" class="button" type="button">
-                    Get a joke
+                    <span id="loader" class="button_loader"></span>
+                    <span id="cta" class="button_cta">Generate joke</span>
                 </button>
             </div>
-            
+
         </div>
     </body>
+
     <script src="script.js"></script>
+
 </html>
