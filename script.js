@@ -1,5 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const head = document.querySelector('.head');
+    const text = head.textContent;
+    head.innerHTML = ''; 
+
+    [...text].forEach((char, i) => {
+        const span = document.createElement('span');
+
+        span.innerHTML = char === ' ' ? '&nbsp;' : char;
+        span.style.display = 'inline-block';
+
+        span.style.animationDelay = `${i * 0.1}s`; 
+        head.appendChild(span);
+    });
+    // did use AI to write the above ^^^ bc couldn't figure it out for the life of me :(
+    
+
     const selectorBtn = document.getElementById('button');
     const ctaBtn = document.getElementById('cta');
     const loader = document.getElementById('loader');
@@ -110,3 +126,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+

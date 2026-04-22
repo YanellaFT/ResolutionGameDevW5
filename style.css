@@ -28,6 +28,22 @@ header {
 }
 
 
+.head span {
+    display: inline-block;
+    animation: letterJump 2s ease-in-out infinite;
+}
+
+@keyframes letterJump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px); 
+        color: #0f3a13; 
+    }
+}
+
+
 .joke_container {
     background-image: url("./paper.jpg");
     zoom: 1.2;
@@ -46,84 +62,3 @@ header {
     padding: 40px;
 }
 
-
-
-/* --- The Bubble Tail --- 
-.joke_container::after {
-    content: '';
-    position: absolute;
-    bottom: -30px; /* Adjust based on tail size  
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 30px 25px 0 25px;
-    border-style: solid;
-    border-color: var(--primary-color) transparent transparent transparent;
-}
-
-/* Internal tail to create the white fill effect  
-.joke_container::before {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 25px 20px 0 20px;
-    border-style: solid;
-    border-color: var(--white) transparent transparent transparent;
-    z-index: 1;
-}
-
-#joke {
-    font-size: 1.4rem;
-    line-height: 1.5;
-    font-weight: 500;
-    z-index: 2;
-}
-
-/* --- Error Styling ---  
-.error_container {
-    display: none;
-    color: var(--error-color);
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-}
-
-/* --- Button Styling ---  
-.button {
-    background-color: var(--primary-color);
-    color: var(--white);
-    border: none;
-    padding: 18px 40px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-    margin: 0 auto;
-}
-
-.button:hover {
-    background-color: var(--secondary-color);
-    transform: scale(1.05);
-}
-
-.button:active {
-    transform: scale(0.95);
-}
-
-/* --- Loader ---  
-.button_loader {
-    display: none;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: #fff;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-} 
