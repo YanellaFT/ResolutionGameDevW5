@@ -50,8 +50,6 @@ header {
 
     border-radius: 30px;
     box-shadow: 0 15px 35px #445446;
-    /* border: 3px solid #5ce76a; bleh lookss bad*/
-
 
     min-height: 200px;
     display: flex;
@@ -62,3 +60,15 @@ header {
     padding: 40px;
 }
 
+.button {
+    margin-top: 30px;
+    padding: 10px 20px;
+
+    font-size: 1.2rem;
+    color: #0f3a13;
+    background-color: #5ce76a;
+
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
